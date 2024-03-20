@@ -7,6 +7,8 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import { UpdateDepartmentDto } from './dto/';
+import { CreateDepartmentDto } from './dto/';
 
 @Controller('departments')
 export class DepartmentsController {
@@ -26,12 +28,15 @@ export class DepartmentsController {
   }
 
   @Post()
-  create(@Body() bodyDto) {
+  create(@Body() createDepartmentDto: CreateDepartmentDto) {
     return 'Added Department';
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updagteDepartmentDto) {
+  update(
+    @Param('id') id: number,
+    @Body() updateDepartmentDto: UpdateDepartmentDto,
+  ) {
     return 'Update Dept';
   }
 

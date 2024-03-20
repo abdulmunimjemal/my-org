@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DepartmentsController } from './departments/departments.controller';
-import { DepartmentsService } from './departments/departments.service';
 import { DepartmentsModule } from './departments/departments.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
@@ -21,7 +19,5 @@ import * as Joi from '@hapi/joi';
     }),
     DatabaseModule,
   ],
-  controllers: [DepartmentsController],
-  providers: [DepartmentsService],
 })
 export class AppModule {}

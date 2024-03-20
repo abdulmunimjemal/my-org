@@ -5,6 +5,7 @@
 
 # Environment Variable
 .env
+docker.env
 
 # Logs
 logs

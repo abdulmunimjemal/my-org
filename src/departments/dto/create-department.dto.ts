@@ -3,11 +3,11 @@ import { IsOptional, IsNotEmpty, IsString } from 'class-validator';
 export class CreateDepartmentDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  readonly name: string;
 
   @IsOptional()
-  description: string;
+  readonly description: string;
 
   @IsOptional()
-  managingDepartmentId: number;
+  readonly managingDepartmentId: number;
 }

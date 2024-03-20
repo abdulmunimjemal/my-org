@@ -9,27 +9,30 @@ import {
 } from '@nestjs/common';
 import { UpdateDepartmentDto } from './dto/';
 import { CreateDepartmentDto } from './dto/';
+import { DepartmentsService } from './departments.service';
 
 @Controller('departments')
 export class DepartmentsController {
+  constructor(private readonly departmentsService: DepartmentsService) {}
+
   @Get('')
   findAll() {
-    return 'ALL';
+    return this.departmentsService.getAllDepartments();
   }
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return 'by id';
+    return this.departmentsService.getDepartmentById(id);
   }
 
   @Get(':name')
   findByName(@Param('name') name: string) {
-    return 'by name';
+    return this.departmentsService.getDepartmentByName(name);
   }
 
   @Post()
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
-    return 'Added Department';
+    return this.departmentsService.createDepartment(createDepartmentDto);
   }
 
   @Patch(':id')
@@ -37,11 +40,11 @@ export class DepartmentsController {
     @Param('id') id: number,
     @Body() updateDepartmentDto: UpdateDepartmentDto,
   ) {
-    return 'Update Dept';
+    return this.departmentsService.updateDepartment(id, updateDepartmentDto);
   }
 
   @Delete(':id')
   delete(@Param('id') id: number) {
-    return 'Delete dept';
+    return this.departmentsService.deleteDepartment(id);
   }
 }

@@ -11,6 +11,7 @@ import { AuthenticationService } from './authentication.service';
 import { LocalAuthenticationGuard } from './guards';
 import { RegisterDto } from './dto/';
 import { RequestWithUser } from './interfaces';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -24,9 +25,11 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
-  async login(@Req() request: RequestWithUser) {
+  async login(@Req() request: RequestWithUser, @Req() response: Response) {
     const user = request.user;
+    const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
+    response.setHeader('Set-Cookie', cookie);
     delete user.password;
-    return user;
+    return response.send(user);
   }
 }

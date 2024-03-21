@@ -19,9 +19,8 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  readonly lastName;
+  readonly lastName?;
 
-  @IsNumber()
   @IsOptional()
-  readonly departmentId;
+  readonly departmentId?: number;
 }

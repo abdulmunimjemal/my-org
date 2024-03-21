@@ -1,8 +1,11 @@
+import { User } from '../../users/entities';
 import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -23,4 +26,8 @@ export class Department {
 
   @Column({ nullable: true })
   managingDepartmentId: number;
+
+  @JoinTable()
+  @OneToMany((type) => User, (user) => user.department)
+  members: User[];
 }

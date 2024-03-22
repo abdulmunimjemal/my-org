@@ -6,10 +6,12 @@ import {
   Body,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UpdateDepartmentDto } from './dto/';
 import { CreateDepartmentDto } from './dto/';
 import { DepartmentsService } from './departments.service';
+import { JwtAuthenticationGuard } from '../authentication/guards';
 
 @Controller('departments')
 export class DepartmentsController {
@@ -31,11 +33,13 @@ export class DepartmentsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthenticationGuard)
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
     return this.departmentsService.createDepartment(createDepartmentDto);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthenticationGuard)
   update(
     @Param('id') id: number,
     @Body() updateDepartmentDto: UpdateDepartmentDto,

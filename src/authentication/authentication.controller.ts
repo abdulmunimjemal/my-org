@@ -1,14 +1,16 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { LocalAuthenticationGuard } from './guards';
+import { JwtAuthenticationGuard, LocalAuthenticationGuard } from './guards';
 import { RegisterDto } from './dto/';
 import { RequestWithUser } from './interfaces';
 import { Response } from 'express';
@@ -31,5 +33,23 @@ export class AuthenticationController {
     response.setHeader('Set-Cookie', cookie);
     delete user.password;
     return response.send(user);
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Post('logout')
+  async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
+    response.setHeader(
+      'Set-Cookie',
+      this.authenticationService.getCookieForLogout(),
+    );
+    return response.sendStatus(200);
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Get()
+  authenticate(@Req() request: RequestWithUser) {
+    const user = request.user;
+    delete user.password;
+    return user;
   }
 }
